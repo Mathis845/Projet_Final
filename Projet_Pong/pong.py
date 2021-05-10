@@ -2,6 +2,7 @@ import pygame
 import sys
 import pygame.key
 import pygame.font
+from pygame.time import delay
 
 pygame.init()
 
@@ -16,13 +17,11 @@ lst=[s1," ",":"," ",s2]
 
 screen = pygame.display.set_mode([longueur,largeur])
 
-screen.fill([0,0,0])
-
-x=500 # abcisse du centre de la balle
-y=333 # ordonnée du centre de la balle
-r=20  # rayon de la balle
-vx=8   #vitesse dans la direction des x positifs
-vy=12  # vitesse dans la direction des y positifs
+xballe=500 # abcisse du centre de la balle
+yballe=333 # ordonnée du centre de la balle
+rballe=20  # rayon de la balle
+vxballe=8   #vitesse dans la direction des x positifs
+vyballe=12  # vitesse dans la direction des y positifs
 
 phrase="".join(lst)
 police = pygame.font.Font("police.ttf", 128)
@@ -35,49 +34,64 @@ raquette2_y=largeur/2
 raquette_h=100
 raquette_l=20
 deplacement=10
-marge = 2*r
+marge = 2*rballe
 
 pygame.key.set_repeat(10, 10)
 
+while True:
+    screen.fill(couleur)
+    pygame.draw.rect(screen,[0,0,0],[500,333,200,50])
+    text=police.render(("Barre espace pour jouer"),True,(couleur))
+    screen.blit(text,(500,333))
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.display.quit()
+            sys.exit()
+        if event.type==pygame.KEYDOWN:
+            if pygame.key.get_pressed()[pygame.SPACE]:
+                continue
+                
 while True:
     screen.fill([0,0,0])
     lst=[s1," ",":"," ",s2]
     phrase="".join(lst)
     texte = police.render((phrase), True, (255, 255, 255))
     
-    pygame.draw.circle(screen, couleur, [x,y], r, 0)
+    pygame.draw.circle(screen, couleur, [xballe,yballe], rballe, 0)
     pygame.draw.rect(screen, couleur, [raquette_x,raquette_y,raquette_l,raquette_h])
     pygame.draw.rect(screen, couleur, [raquette2_x,raquette2_y,raquette_l,raquette_h])
     
     screen.blit(texte,(longueur/2-130,30))
     
-    x=x+vx
-    y=y+vy
+    xballe=xballe+vxballe
+    yballe=yballe+vyballe
     
     #collision avec les murs
-    if x+r > longueur:
-        vx= -vx
+    if xballe+rballe > longueur:
+        vxballe= -vxballe
         score1=score1+1
-    if x-r < 0:
-        vx= -vx
-        score2=score2+1        
-    if y+r > largeur:
-        vy= -vy        
-    if y-r < 0:
-        vy= -vy
+        #decompte()
+    if xballe-rballe < 0:
+        vxballe= -vxballe
+        score2=score2+1
+        #decompte()
+    if yballe+rballe > largeur:
+        vyballe= -vyballe        
+    if yballe-rballe < 0:
+        vyballe= -vyballe
     s1=str(score1)
     s2=str(score2)   
     
     pygame.display.flip()
-    pygame.time.delay(15)
+    delay(15)
     
     #collision entre le bord droit de la raquette de gauche (uniquement) et la balle (plus une marge)
-    if x-r < raquette_x + raquette_l  and y > raquette_y - marge and y  < raquette_y + raquette_h + marge:
-        vx = -vx
+    if xballe-rballe < raquette_x + raquette_l  and yballe > raquette_y - marge and yballe  < raquette_y + raquette_h + marge:
+        vxballe = -vxballe
         
     #collision entre le bord gauche de la raquette de droite (uniquement) et la balle (plus une marge)
-    if x + r > raquette2_x and y > raquette2_y - marge and y  < raquette2_y + raquette_h + marge:
-        vx = -vx
+    if xballe + rballe > raquette2_x and yballe > raquette2_y - marge and yballe  < raquette2_y + raquette_h + marge:
+        vxballe = -vxballe
 
 
     for event in pygame.event.get():
