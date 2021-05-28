@@ -1,0 +1,26 @@
+Notre projet est inspiré du jeu rétro PONG, c'est pour cela que nous avons
+décidé de garder les couleurs originales (fond noire + jeu en blanc).
+
+Après avoir développer la base du jeu, nous avons décider de créer un menu,
+c'est moi qui me suis occupé de ça et c'est cette partie que je vais développer
+ici : Pour cela il faut créer plusieurs fonctions qui gèrent, les différentes
+pages et mettre le jeu précédement créer dans une fonction "jeu". Puis créer 
+une page de menu, je l'ai fait très simple le nom du jeu + un bouton "Start".
+Il faut aussi une fonction qui sert de bouton que l'on place derrière le texte
+"Appuyer pour jouer", qui change la varible afficher en "jeu" qui était 
+précédement "menu". Il faut aussi comme toujours en pygame une fonction qui
+permet de quitter le jeu sinon la page bug. Je vais donc expliquer la fonction
+qui gère le bouton :
+
+def fct_boutton(rectangle):
+    global afficher				#Variable ayant pour argument "menu" pour le moment
+    mouse = pygame.mouse.get_pressed()		#Créer une variable qui teste si la souris est pressé
+    if mouse[0]: # UP				#Teste la position de la souris
+        mouse_pos = pygame.mouse.get_pos()	#Teste la position de la souris
+         
+        if rectangle.collidepoint(mouse_pos):	#Si la position de la souris est sur le bouton
+            print('Cliqué sur:', rectangle)	#Si la souris clique sur le bouton
+            afficher = jeu			#Change la variable afficher de "menu" vers "jeu" et comme afficher et tout le temps tester, bascule vers le jeu
+
+Si nous avions eu plus de temps, j'aurai aimé faire un menu de fin, un mode solo
+ou un autre mode de jeu comme avec plusieurs balles.
