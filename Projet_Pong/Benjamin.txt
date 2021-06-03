@@ -1,0 +1,14 @@
+La partie que je vais expliquer est celle sur ce qu'il se passe lorsqu'un joueur marque un point, j'ai choisi cette partie car c'était celle qui nécessitait le plus de réflexion par rapport à comment marche le jeu et non pas que du code pour faire une action en particulier :
+
+if xballe+rballe > longueur: #Si l'abcisse de la balle + son rayon est supérieure à la longueur de l'écran (donc le bord) alors :
+            score1=score1+1 #on ajoute 1 à la variable de score (ici le score du joueur 1)
+            vxballe=0 #On met la vitesse des x de la balle à 0 (balle stoppée horizontalement)
+            vyballe=0 #On met la vitesse des y de la balle à 0 (balle stoppée verticalement)
+            xballe=500 #On met la balle au centre (x)
+            yballe=333 #On met la balle au centre (y)
+            if random.randint(1,2) == 1: #Si choix aléatoire entre 1 et 2 donne 1 alors
+                vxballe = 12 #La balle part dans une direction (x)
+                vyballe = 16 #La balle part dans une direction (y)
+            else:
+                vxballe = -12 #La balle part dans la meme direction mais pas dans le meme sens (x), pour donner un peu d'aléatoire et que la balle ne se comporte pas toujours pareil
+                vyballe = -16 #La balle part dans la meme direction mais pas dans le meme sens (y)
